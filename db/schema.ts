@@ -10,7 +10,5 @@ export const notes = pgTable("notes", {
   id: serial("id").primaryKey(),
   content: text("content").notNull(),
   important: boolean("important").notNull().default(false),
-  userId: integer("user_id")
-    .notNull()
-    .references(() => users.id),
+  userId: integer("user_id").notNull().references(() => users.id),
 })

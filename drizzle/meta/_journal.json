@@ -8,6 +8,20 @@
       "when": 1776199104093,
       "tag": "0000_dusty_wildside",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776200181556,
+      "tag": "0001_early_krista_starr",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776200867767,
+      "tag": "0002_wandering_virginia_dare",
+      "breakpoints": true
     }
   ]
 }
