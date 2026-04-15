@@ -7,10 +7,6 @@ export const users = pgTable("users", {
   name: text("name").notNull(),
 })
 
-export const usersRelations = relations(users, ({ many }) => ({
-  notes: many(notes),
-}))
-
 export const notes = pgTable("notes", {
   id: serial("id").primaryKey(),
   content: text("content").notNull(),
@@ -19,6 +15,10 @@ export const notes = pgTable("notes", {
     .notNull()
     .references(() => users.id),
 })
+
+export const usersRelations = relations(users, ({ many }) => ({
+  notes: many(notes),
+}))
 
 export const notesRelations = relations(notes, ({ one }) => ({
   user: one(users, {
