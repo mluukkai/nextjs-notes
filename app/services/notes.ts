@@ -1,25 +1,28 @@
-import { eq, sql } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { db } from "../../db"
-import { notes, users } from "../../db/schema"
+import { notes } from "../../db/schema"
+import { getCurrentUser } from "./session"
 
 export const getNotes = async (importantOnly: boolean) => {
   if (importantOnly) {
-    return db.select().from(notes).where(eq(notes.important, true))
+    return db.query.notes.findMany({
+      where: eq(notes.important, true),
+    })
   }
-  return db.select().from(notes)
+  return db.query.notes.findMany()
 }
 
 export const getNoteById = async (id: number) => {
-  const result = await db.select().from(notes).where(eq(notes.id, id))
-  return result[0]
+  return db.query.notes.findFirst({
+    where: eq(notes.id, id),
+  })
 }
 
 export const addNote = async (content: string, important: boolean) => {
-  const [user] = await db
-    .select()
-    .from(users)
-    .orderBy(sql`RANDOM()`)
-    .limit(1)
+  const user = await getCurrentUser()
+  if (!user) {
+    throw new Error("Not logged in")
+  }
 
   await db.insert(notes).values({ content, important, userId: user.id })
 }
