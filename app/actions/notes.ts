@@ -2,12 +2,11 @@
 
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../../lib/auth"
+import { auth } from "@/auth"
 import { addNote, toggleImportance } from "../services/notes"
 
 export const createNote = async (formData: FormData) => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     redirect("/login")
   }
